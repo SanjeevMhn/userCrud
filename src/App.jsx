@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faPen, faTrashCan, faTableCells, faList } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
 
@@ -16,6 +16,7 @@ const App = () => {
   let [editMode, setEditMode] = useState(false);
   let [searchName, setSearchName] = useState("");
   let [changeView, setChangeView] = useState('grid');
+  let [disableField, setDisableField] = useState(false);
   let [users, setUsers] = useState([
     {
       "id": 100,
@@ -87,14 +88,19 @@ const App = () => {
         "img": imgName
       }]);
 
-      console.log(users);
-
       setAddUserForm(!addUserForm);
       changeFormTitle("Add User")
       userForm.current.reset();
 
     }
 
+  }
+
+  const handleAddUser = () => {
+    setAddUserForm(!addUserForm); 
+    changeFormTitle('Add User'); 
+    setEditMode(editMode = false);
+    setDisableField(disableField = false);
   }
 
   const handleDropDown = (event) => {
@@ -106,6 +112,7 @@ const App = () => {
 
   const handleEdit = (id) => {
     setEditMode(!editMode);
+    setDisableField(!disableField);
     let selectedUser = users.filter((user) => user.id === id);
     if (selectedUser.length !== 0) {
       setAddUserForm(!addUserForm);
@@ -131,7 +138,7 @@ const App = () => {
   }
 
   const handleSearch = () => {
-    setSearchName(searchName = searchValue.current.value); 
+    setSearchName(searchName = searchValue.current.value);
     console.log(searchName)
   }
 
@@ -144,51 +151,24 @@ const App = () => {
             <input type="text" name="user-text" id="" class="border-2 border-blue-400 rounded-l-lg text-base py-2 px-4" placeholder="Enter Username" ref={searchValue} />
             <button className="search-btn bg-blue-400 text-white py-2 px-4 text-base rounded-r-lg border-2 border-blue-400" onClick={handleSearch}>Search</button>
           </div>
-          <div className="options ml-3">
-            <button type="button" className="bg-blue-400 text-white py-2 px-4 text-base rounded-lg border-2 border-blue-400" onClick={() => { setAddUserForm(!addUserForm); changeFormTitle('Add User'); setEditMode(editMode = false) }}>Add User</button>
+          <div className="options ml-3 flex gap-2">
+            <button type="button" className="bg-blue-400 text-white py-2 px-4 text-base rounded-lg border-2 border-blue-400" onClick={handleAddUser}>Add User</button>
+            <button type="button" className="bg-blue-400 text-white py-2 px-4 text-base rounded-lg border-2 border-blue-400" onClick={() => { setChangeView(changeView = 'grid') }}>
+              <div className="icon-container">
+                <FontAwesomeIcon icon={faTableCells} />
+              </div>
+            </button>
+            <button type="button" className="bg-blue-400 text-white text-base py-2 px-4 border-2 border-blue-400 rounded-lg" onClick={() => { setChangeView(changeView = 'list') }}>
+              <div className="icon-container">
+                <FontAwesomeIcon icon={faList} />
+              </div>
+            </button>
           </div>
         </div>
       </header>
       <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : ''}`}>
         {searchName.length ? users.map(user => {
-          if(user.name.includes(searchName)){
-            return(
-              <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-[calc(100%/5)]'}`} key={user.id}>
-                <div className="inner-container h-full p-5 border-2 rounded-lg border-slate-400 flex flex-col items-center">
-                  <div className="icon-container ml-auto cursor-pointer relative h-[30px] w-[30px] flex-[0_0_30px] flex items-center justify-end" onClick={handleDropDown}>
-                    <FontAwesomeIcon icon={faEllipsisVertical} />
-                    <div className="dropdown-content absolute top-full right-0 border-2 border-blue-400 rounded-lg bg-white hidden">
-                      <button type="button" className="px-4 py-2 flex items-center" onClick={() => { handleEdit(user.id) }}>
-                        <div className="icon-container h-[30px] w-[30px] flex-[0_0_30px] bg-lime-400 rounded-full flex items-center justify-center">
-                          <FontAwesomeIcon icon={faPen} />
-                        </div>
-                        <span className="label-tex ml-2 text-blue-400">
-                          Edit
-                        </span>
-                      </button>
-                      <button type="button" className="px-4 py-2 flex items-center" onClick={() => { handleDelete(user.id) }}>
-                        <div className="icon-container h-[30px] w-[30px] flex-[0_0_30px] bg-lime-400 rounded-full flex items-center justify-center">
-                          <FontAwesomeIcon icon={faTrashCan} />
-                        </div>
-                        <span className="label-text ml-2 text-blue-400">
-                          Delete
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                  <div className="img-container h-[80px] w-[80px] rounded-full border-2 border-slate-400 cursor-pointer">
-                    <img src={user.img ? user.img : defaultUserImage} alt="" />
-                  </div>
-                  <div className="user-details text-center mt-2">
-                    <h2 className="user-name text-lg">
-                      {user.name}
-                    </h2>
-                    <p className="user-role text-sm">{user.role}</p>
-                  </div>
-                </div>
-              </div>
-            )
-          }}) : users.map((user, index) => {
+          if (user.name.includes(searchName)) {
             return (
               <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-[calc(100%/5)]'}`} key={user.id}>
                 <div className="inner-container h-full p-5 border-2 rounded-lg border-slate-400 flex flex-col items-center">
@@ -225,7 +205,45 @@ const App = () => {
                 </div>
               </div>
             )
-          })
+          }
+        }) : users.map((user, index) => {
+          return (
+            <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-[calc(100%/5)]'}`} key={user.id}>
+              <div className="inner-container h-full p-5 border-2 rounded-lg border-slate-400 flex flex-col items-center">
+                <div className="icon-container ml-auto cursor-pointer relative h-[30px] w-[30px] flex-[0_0_30px] flex items-center justify-end" onClick={handleDropDown}>
+                  <FontAwesomeIcon icon={faEllipsisVertical} />
+                  <div className="dropdown-content absolute top-full right-0 border-2 border-blue-400 rounded-lg bg-white hidden">
+                    <button type="button" className="px-4 py-2 flex items-center" onClick={() => { handleEdit(user.id) }}>
+                      <div className="icon-container h-[30px] w-[30px] flex-[0_0_30px] bg-lime-400 rounded-full flex items-center justify-center">
+                        <FontAwesomeIcon icon={faPen} />
+                      </div>
+                      <span className="label-tex ml-2 text-blue-400">
+                        Edit
+                      </span>
+                    </button>
+                    <button type="button" className="px-4 py-2 flex items-center" onClick={() => { handleDelete(user.id) }}>
+                      <div className="icon-container h-[30px] w-[30px] flex-[0_0_30px] bg-lime-400 rounded-full flex items-center justify-center">
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </div>
+                      <span className="label-text ml-2 text-blue-400">
+                        Delete
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div className="img-container h-[80px] w-[80px] rounded-full border-2 border-slate-400 cursor-pointer">
+                  <img src={user.img ? user.img : defaultUserImage} alt="" />
+                </div>
+                <div className="user-details text-center mt-2">
+                  <h2 className="user-name text-lg">
+                    {user.name}
+                  </h2>
+                  <p className="user-role text-sm">{user.role}</p>
+                </div>
+              </div>
+            </div>
+          )
+        })
         }
       </main>
       <div className={`add-user modal bg-gray-700/40 w-full h-screen absolute top-0 left-0 justify-center items-center ${addUserForm ? 'flex' : 'hidden'}`}>
@@ -237,7 +255,7 @@ const App = () => {
           </div>
           <div className="form-group flex flex-col pb-2">
             <label htmlFor="useremail" className="text-blue-400 font-semibold text-xl mb-1">Email</label>
-            <input type="email" name="email" id="useremail" className="py-2 px-4 border-2 border-blue-400 rounded-lg" placeholder="Your Name" ref={emailValue} />
+            <input type="email" name="email" id="useremail" className="py-2 px-4 border-2 border-blue-400 rounded-lg" placeholder="Your Name" ref={emailValue} disabled={disableField} />
           </div>
           <div className="form-group flex flex-col pb-2">
             <label htmlFor="userrole" className="text-blue-400 font-semibold text-xl mb-1">Role</label>
