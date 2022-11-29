@@ -170,7 +170,7 @@ const App = () => {
       </header>
       <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : ''}`}>
         {searchName.length ? users.map(user => {
-          if (user.name.includes(searchName)) {
+          if (user.name.toLowerCase().includes(searchName.toLowerCase())) {
             return (
               <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-[calc(100%/5)]'}`} key={user.id}>
                 <div className="inner-container h-full p-5 border-2 rounded-lg border-slate-400 flex flex-col items-center">
