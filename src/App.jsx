@@ -64,7 +64,8 @@ const App = () => {
             ...usr,
             name: nameValue.current.value,
             email: emailValue.current.value,
-            role: roleValue.current.value
+            role: roleValue.current.value,
+            img: imgValue.current.value
           }
 
         }
@@ -111,7 +112,7 @@ const App = () => {
   }
 
   const handleEdit = (id) => {
-    setEditMode(!editMode);
+    setEditMode(editMode = true);
     setDisableField(!disableField);
     let selectedUser = users.filter((user) => user.id === id);
     if (selectedUser.length !== 0) {
@@ -121,6 +122,7 @@ const App = () => {
     nameValue.current.value = selectedUser[0].name;
     roleValue.current.value = selectedUser[0].role;
     emailValue.current.value = selectedUser[0].email;
+    // imgValue.current.value = selectedUser[0].img;
   }
 
   const handleDelete = (id) => {
