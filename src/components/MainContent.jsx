@@ -17,7 +17,7 @@ const MainContent = (props) => {
     const { theme, setTheme } = useContext(ThemeContext);
 
     return (
-        <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : ''} ${theme === 'dark' ? "bg-gray-800" : ""}`}>
+        <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : 'flex-col lg:flex-row'} ${theme === 'dark' ? "bg-gray-800" : ""}`}>
             {searchName.length ? users.map(user => {
                 if (user.name.toLowerCase().includes(searchName.toLowerCase())) {
                     return (
