@@ -16,7 +16,7 @@ const Header = forwardRef(function Header(props, ref) {
 
     return (
         <header className={`main-header px-7 py-2 ${theme === 'dark' ? "bg-gray-800" : ""}`}>
-            <a href="#" className="brand-logo block font-sans text-[35px] pb-2 text-center font-semibold text-blue-400 underline">User List</a>
+            <a href="#" className="brand-logo block font-sans text-[35px] pb-2 text-center font-semibold text-blue-400 underline" onClick={()=>{window.location.reload()}}>User List</a>
             <div className="user-actions flex items-center justify-center">
                 <div className="user-search ml-auto">
                     <input type="text" name="user-text" id="" class="border-2 border-blue-400 rounded-l-lg text-base py-2 px-4" placeholder="Enter Username" ref={ref} />
