@@ -1,6 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
 
 const AddUserForm = forwardRef(function AddUserForm(props, ref) {
+
+    const { theme, setTheme } = useContext(ThemeContext);
+
     const {
         addUserForm,
         setAddUserForm,
@@ -17,8 +21,8 @@ const AddUserForm = forwardRef(function AddUserForm(props, ref) {
     } = ref;
 
     return (
-        <div className={`add-user modal bg-gray-700/40 w-full h-screen absolute top-0 left-0 justify-center items-center ${addUserForm ? 'flex' : 'hidden'}`}>
-            <form onSubmit={handleSubmit} className="form w-1/2 p-8 bg-white border-2 border-blue-400 rounded-lg relative" ref={refForm}>
+        <div className={`add-user modal w-full h-screen absolute top-0 left-0 justify-center items-center ${addUserForm ? 'flex' : 'hidden'} ${theme === 'dark'? "bg-gray-900/90" : "bg-gray-800/60"}`}>
+            <form onSubmit={handleSubmit} className={`form w-1/2 p-8 border-2 border-blue-400 rounded-lg relative ${theme === 'dark' ? "bg-gray-800" : "bg-white"}`} ref={refForm}>
                 <h2 className="form-title text-center font-semibold text-blue-400 text-2xl mb-5">Add User</h2>
                 <div className="form-group flex flex-col pb-2">
                     <label htmlFor="username" className="text-blue-400 font-semibold text-xl mb-1">Name</label>

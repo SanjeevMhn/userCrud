@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import UserCard from './UserCard';
+import { ThemeContext } from '../context/ThemeContext';
 
 const MainContent = (props) => {
     const {
@@ -13,8 +14,10 @@ const MainContent = (props) => {
         searchName
     } = props;
 
+    const { theme, setTheme } = useContext(ThemeContext);
+
     return (
-        <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : ''}`}>
+        <main className={`main-content p-5 w-full flex flex-wrap ${changeView === 'list' ? 'flex-col' : ''} ${theme === 'dark' ? "bg-gray-800" : ""}`}>
             {searchName.length ? users.map(user => {
                 if (user.name.toLowerCase().includes(searchName.toLowerCase())) {
                     return (

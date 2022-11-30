@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import AddUserForm from './components/AddUserForm';
+import { ThemeContext } from './context/ThemeContext';
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
   let [searchName, setSearchName] = useState("");
   let [changeView, setChangeView] = useState('grid');
   let [disableField, setDisableField] = useState(false);
+  let [theme,setTheme] = useState('light');
   let [users, setUsers] = useState([
     {
       "id": 100,
@@ -145,39 +147,41 @@ const App = () => {
   }
 
   return (
-    <div className="page-wrapper relative">
-      <Header
-        ref={searchValue}
-        handleSearch={handleSearch}
-        changeView={changeView}
-        setChangeView={setChangeView}
-        handleAddUser={handleAddUser}
-      />
+    <ThemeContext.Provider value={{theme, setTheme}}>
+      <div className={`page-wrapper relative h-screen ${theme === 'dark' ? "bg-gray-800" : ""}`}>
+        <Header
+          ref={searchValue}
+          handleSearch={handleSearch}
+          changeView={changeView}
+          setChangeView={setChangeView}
+          handleAddUser={handleAddUser}
+        />
 
-      <MainContent
-        changeView={changeView}
-        setChangeView={setChangeView}
-        users={users}
-        handleDropDown={handleDropDown}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        defaultUserImage={defaultUserImage}
-        searchName={searchName}
-      />
+        <MainContent
+          changeView={changeView}
+          setChangeView={setChangeView}
+          users={users}
+          handleDropDown={handleDropDown}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          defaultUserImage={defaultUserImage}
+          searchName={searchName}
+        />
 
-      <AddUserForm
-        addUserForm={addUserForm}
-        setAddUserForm={setAddUserForm}
-        disableField={disableField}
-        handleSubmit={handleSubmit}
-        ref={{
-          refName: nameValue,
-          refEmail: emailValue,
-          refRole: roleValue,
-          refImg: imgValue,
-          refForm: userForm
-        }} />
-    </div>
+        <AddUserForm
+          addUserForm={addUserForm}
+          setAddUserForm={setAddUserForm}
+          disableField={disableField}
+          handleSubmit={handleSubmit}
+          ref={{
+            refName: nameValue,
+            refEmail: emailValue,
+            refRole: roleValue,
+            refImg: imgValue,
+            refForm: userForm
+          }} />
+      </div>
+    </ThemeContext.Provider>
   )
 }
 
