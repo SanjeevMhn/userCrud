@@ -1,11 +1,10 @@
-import React, { createContext, useRef, useState } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import AddUserForm from './components/AddUserForm';
 import { ThemeContext } from './context/ThemeContext';
 
 const App = () => {
-
   let defaultUserImage = './src/assets/user.png';
   let [addUserForm, setAddUserForm] = useState(false);
   let [showDropDown, setShowDropDown] = useState(false);
@@ -19,7 +18,8 @@ const App = () => {
   let [searchName, setSearchName] = useState("");
   let [changeView, setChangeView] = useState('grid');
   let [disableField, setDisableField] = useState(false);
-  let [theme,setTheme] = useState('light');
+
+  let [theme,setTheme] = useState('dark');
   let [users, setUsers] = useState([
     {
       "id": 100,
