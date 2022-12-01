@@ -21,7 +21,7 @@ const AddUserForm = forwardRef(function AddUserForm(props, ref) {
     } = ref;
 
     return (
-        <div className={`add-user modal w-[100%] h-full absolute z-50 top-0 left-0 p-5 lg:p-0 justify-center items-start lg:items-center ${addUserForm ? 'flex' : 'hidden'} ${theme === 'dark'? "bg-gray-900/90" : "bg-gray-800/60"}`}>
+        <div className={`add-user modal w-[100%] h-full fixed z-50 top-0 left-0 p-5 lg:p-0 justify-center items-center ${addUserForm ? 'flex' : 'hidden'} ${theme === 'dark'? "bg-gray-900/90" : "bg-gray-800/60"}`}>
             <form onSubmit={handleSubmit} className={`form w-[100%] lg:w-1/2 p-4 lg:p-8 border-2 border-blue-400 rounded-lg relative ${theme === 'dark' ? "bg-gray-800" : "bg-white"}`} ref={refForm}>
                 <h2 className="form-title text-center font-semibold text-blue-400 text-2xl mb-5">Add User</h2>
                 <div className="form-group flex flex-col pb-2">
