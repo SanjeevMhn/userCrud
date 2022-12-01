@@ -159,7 +159,7 @@ const App = () => {
 
   return (
     <ThemeContext.Provider value={{theme, setTheme}}>
-      <div className={`page-wrapper relative h-auto md:h-screen ${theme === 'dark' ? "bg-gray-800" : ""}`}>
+      <div className={`page-wrapper relative h-screen md:h-screen ${theme === 'dark' ? "bg-gray-800" : ""}`}>
         <Header
           ref={searchValue}
           handleSearch={handleSearch}

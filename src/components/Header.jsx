@@ -18,8 +18,8 @@ const Header = forwardRef(function Header(props, ref) {
         <header className={`main-header px-5 py-2 ${theme === 'dark' ? "bg-gray-800" : ""}`}>
             <a href="#" className="brand-logo block font-sans text-[35px] pb-2 text-center font-semibold text-blue-400 underline" onClick={()=>{window.location.reload()}}>User List</a>
             <div className="user-actions flex items-center justify-center flex-col md:flex-row gap-2">
-                <div className="user-search flex">
-                    <input type="text" name="user-text" id="" className="border-2 border-blue-400 rounded-l-lg text-base py-2 px-4" placeholder="Enter Username" ref={ref} />
+                <div className="user-search flex w-full md:w-auto">
+                    <input type="text" name="user-text" id="" className="flex-grow border-2 border-blue-400 rounded-l-lg text-base py-2 px-4" placeholder="Enter Username" ref={ref} />
                     <button className="search-btn bg-blue-400 text-white py-2 px-4 text-base rounded-r-lg border-2 border-blue-400" onClick={handleSearch}>
                         <div className="icon-container">
                             <FontAwesomeIcon icon={faMagnifyingGlass}/>
