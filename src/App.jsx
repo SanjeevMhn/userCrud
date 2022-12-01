@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import AddUserForm from './components/AddUserForm';
@@ -19,7 +19,7 @@ const App = () => {
   let [changeView, setChangeView] = useState('grid');
   let [disableField, setDisableField] = useState(false);
 
-  let [theme,setTheme] = useState('dark');
+  let [theme,setTheme] = useState();
   let [users, setUsers] = useState([
     {
       "id": 100,
@@ -57,6 +57,17 @@ const App = () => {
       "img": ""
     }
   ]);
+
+  useEffect(() => {
+
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if(prefersDark){
+      setTheme('dark');
+    }else{
+      setTheme('light');
+    }
+
+  },[])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -148,7 +159,7 @@ const App = () => {
 
   return (
     <ThemeContext.Provider value={{theme, setTheme}}>
-      <div className={`page-wrapper relative h-screen ${theme === 'dark' ? "bg-gray-800" : ""}`}>
+      <div className={`page-wrapper relative h-auto md:h-screen ${theme === 'dark' ? "bg-gray-800" : ""}`}>
         <Header
           ref={searchValue}
           handleSearch={handleSearch}

@@ -17,7 +17,7 @@ const UserCard = (props) => {
         } = props;
 
     return (
-        <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-100 lg:w-[calc(100%/5)]'}`} key={user.id}>
+        <div className={`user-card px-2 mb-4 h-100 ${changeView === 'list' ? 'w-100' : 'w-100 md:w-[calc(100%/2)] lg:w-[calc(100%/3)] xl:w-[calc(100%/5)]'}`} key={user.id}>
             <div className={`inner-container h-full p-5 border-2 rounded-lg border-slate-400 flex flex-col items-center ${theme === 'dark' ? "bg-gray-800 text-white" : ""}`}>
                 <div className={`icon-container ml-auto cursor-pointer relative h-[30px] w-[30px] flex-[0_0_30px] flex items-center justify-end ${theme === 'dark' ? 'text-white' : ''}`} onClick={handleDropDown}>
                     <FontAwesomeIcon icon={faEllipsisVertical} />
